@@ -22,10 +22,5 @@ jobs:
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
-<<<<<<< HEAD
           name: amass-result
           path: output/amass.txt
-=======
-          name: amass
-          path: amass.txt
->>>>>>> f50f5ee77f754e969de6303bf6f0b9e93504f95b
