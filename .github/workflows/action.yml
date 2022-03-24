@@ -17,6 +17,7 @@ jobs:
         with:
           domains: owasp.org
           brute: true
+          output: output/amass.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
