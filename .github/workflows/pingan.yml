@@ -15,7 +15,7 @@ jobs:
       - name: Amass - Enumeration
         uses: r00t-life/amass-action@main
         with:
-          domains: owasp.org
+          domains: pingan.com
           brute: true
           output: amass.txt
 
@@ -23,4 +23,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: amass-result
-          path: amass.txt
+          path: pingan.txt
