@@ -6,6 +6,8 @@ on:
 jobs:
   amass-scan:
     runs-on: ubuntu-latest
+    env: 
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -24,10 +26,8 @@ jobs:
         with:
           name: amass-result
           path: owasp.txt
-          
+
       - name: Discord notification
-        env: 
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: "Action called : {{ GITHUB_ACTION }} OK!"
