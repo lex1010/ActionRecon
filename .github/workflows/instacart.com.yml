@@ -1,4 +1,4 @@
-name: instacart.com
+name: owasp.org
 
 on:
     workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
       - name: Amass - Enumeration
         uses: r00t-life/amass-action@main
         with:
-          domains: instacart.com
+          domains: owasp.org
           brute: true
           output: amass.txt
 
@@ -23,11 +23,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: amass-result
-          path: instacart.com.txt
+          path: amass.txt
 
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The project amass enum instacart.com has been done.'
+          args: 'The project amass enum owasp.org has been done.'
