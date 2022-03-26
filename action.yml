@@ -39,7 +39,7 @@ runs:
         ${{ inputs.passive }} && echo "amass-passive=-active" >> $GITHUB_ENV
         ${{ inputs.brute }} && echo "amass-brute=-brute" >> $GITHUB_ENV
         [ ! -z ${{ inputs.domains }} ] && echo "amass-domains=-d ${{ inputs.domains}}" >> $GITHUB_ENV
-        ${{ inputs.output }} && echo "amass-output=-o ${{ inputs.output}}" >> $GITHUB_ENV
+        [ ! -z ${{ inputs.output }} ] && echo "amass-output=-o ${{ inputs.output}}" >> $GITHUB_ENV
         echo "::endgroup::"
       shell: bash
     - run: |
