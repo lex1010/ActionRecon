@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
 
 jobs:
-  pingan.com-scan:
+  pingan-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 3600
     steps:
