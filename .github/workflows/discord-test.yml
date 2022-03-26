@@ -24,6 +24,7 @@ jobs:
         with:
           name: amass-result
           path: owasp.txt
+          
       - name: Discord notification
         env: 
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

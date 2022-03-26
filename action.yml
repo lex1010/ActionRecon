@@ -29,6 +29,10 @@ runs:
   using: "composite"
   steps:
     - run: |
+        echo "::setting webhook env var::"
+        echo "DISCORD_WEBHOOK=${{ secrets.DISCORD_WEBHOOK }}" >> $GITHUB_ENV
+      shell: bash
+    - run: |
         echo "::group::Install Amass with go get"
         [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
