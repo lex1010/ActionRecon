@@ -1,0 +1,33 @@
+name: instacart.com
+
+on:
+    workflow_dispatch:
+
+jobs:
+  instacart-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: Amass - Enumeration
+        uses: r00t-life/amass-action@main
+        with:
+          domains: instacart.com
+          brute: true
+          output: amass.txt
+
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: amass-result
+          path: instacart.com.txt
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project amass enum instacart.com has been done.'
