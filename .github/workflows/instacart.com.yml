@@ -17,8 +17,8 @@ jobs:
         uses: r00t-life/amass-action@main
         with:
           domains: instacart.com
-          brute: false
-          ipv4: true
+          brute: true
+          ipv4: false
           output: amass.txt
 
       - name: GitHub Workflow artifacts
