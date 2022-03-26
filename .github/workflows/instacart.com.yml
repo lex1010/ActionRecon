@@ -1,11 +1,12 @@
-name: owasp.org
+name: instacart.com
 
 on:
     workflow_dispatch:
 
 jobs:
-  instacart-scan:
+  instacart.com-scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 3600
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -15,8 +16,9 @@ jobs:
       - name: Amass - Enumeration
         uses: r00t-life/amass-action@main
         with:
-          domains: owasp.org
-          brute: true
+          domains: instacart.com
+          brute: false
+          ipv4: true
           output: amass.txt
 
       - name: GitHub Workflow artifacts
@@ -30,4 +32,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The project amass enum owasp.org has been done.'
+          args: 'The project amass enum instacart.com has been done.'

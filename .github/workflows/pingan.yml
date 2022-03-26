@@ -1,11 +1,12 @@
-name: Amass Enum
+name: pingan.com
 
 on:
     workflow_dispatch:
 
 jobs:
-  amass-scan:
+  pingan.com-scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 3600
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -16,11 +17,12 @@ jobs:
         uses: r00t-life/amass-action@main
         with:
           domains: pingan.com
-          brute: true
+          brute: false
+          ipv4: true
           output: amass.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
           name: amass-result
-          path: pingan.txt
+          path: amass.txt
