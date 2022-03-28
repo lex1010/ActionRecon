@@ -27,14 +27,19 @@ inputs:
   ipv4:
     description: "Show the IPv4 addresses for discovered names"
     required: false
+  
+  htx:
+    description: "Httpx request results"
+    required: true
 
   
 runs:
   using: "composite"
   steps:
     - run: |
-        echo "::group::Install Amass with go get"
+        echo "::group::Install Amass and httpx with go get"
         [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
+        [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
         echo "::endgroup::"
       shell: bash
@@ -43,6 +48,7 @@ runs:
         ${{ inputs.passive }} && echo "amass-passive=-active" >> $GITHUB_ENV
         ${{ inputs.brute }} && echo "amass-brute=-brute" >> $GITHUB_ENV
         ${{ inputs.ipv4 }} && echo "amass-ipv4=-ipv4" >> $GITHUB_ENV
+        [ ! -z ${{ inputs.htx }} ] && echo "httpx-output=-o ${{ inputs.htx }}" >> $GITHUB_ENV
         [ ! -z ${{ inputs.domains }} ] && echo "amass-domains=-d ${{ inputs.domains}}" >> $GITHUB_ENV
         [ ! -z ${{ inputs.output }} ] && echo "amass-output=-o ${{ inputs.output}}" >> $GITHUB_ENV
         echo "::endgroup::"
@@ -57,3 +63,8 @@ runs:
           ${{ env.amass-output }}
         echo "::endgroup::"
       shell: bash
+    
+    - run: |
+        echo "::group::Running Httpx..."
+        cat ${{ inputs.output }} | httpx -o ${{ inputs.htx }}
+        echo "::endgroup::"

@@ -20,9 +20,13 @@ jobs:
           brute: false
           ipv4: false
           output: amass.txt
+          htx: httpx.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
           name: amass-result
-          path: amass.txt
+          path: *.txt
+
+      - name: Httpx - Request
+        uses: 
