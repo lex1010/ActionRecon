@@ -1,7 +1,9 @@
 name: instacart.com
 
 on:
-    workflow_dispatch:
+    push:
+      branches:
+        - 'main'
 
 jobs:
   instacart-scan:
