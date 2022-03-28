@@ -62,7 +62,6 @@ runs:
           ${{ env.amass-domains }} \
           ${{ env.amass-output }}
         echo "::endgroup::"
-
         echo "::group::Running Httpx..."
         cat ${{ inputs.output }} | httpx -o ${{ inputs.htx }}
         echo "::endgroup::"
