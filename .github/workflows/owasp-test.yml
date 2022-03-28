@@ -1,7 +1,9 @@
 name: owasp.org
 
 on:
-    workflow_dispatch:
+    push:
+      branches:
+        - 'main'
 
 jobs:
   owasp-scan:
