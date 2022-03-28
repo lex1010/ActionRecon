@@ -19,14 +19,14 @@ jobs:
           domains: instacart.com
           brute: true
           ipv4: false
-          output: amass.txt
-          htx: httpx.txt
+          output: ~/result/amass/amass.txt
+          htx: ~/result/httpx/httpx.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
           name: amass-result
-          path: *
+          path: ~/result/**/*
 
       - name: Discord notification
         env:
