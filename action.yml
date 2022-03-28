@@ -35,7 +35,7 @@ runs:
     - run: |
         echo "::group::Install Amass and httpx with go get"
         [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
-        [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+        [ ! -x /home/runner/go/bin/httpx ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
         echo "::endgroup::"
       shell: bash
