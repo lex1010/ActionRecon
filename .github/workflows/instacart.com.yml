@@ -13,6 +13,10 @@ jobs:
         with:
           go-version: 1.17
 
+      - run: |
+          mkdir -p ~/result/amass
+          mkdir -p ~/result/httpx
+
       - name: Amass - Enumeration
         uses: r00t-life/amass-action@main
         with:
@@ -20,7 +24,10 @@ jobs:
           brute: true
           ipv4: false
           output: ~/result/amass/amass.txt
-          htx: ~/result/httpx/httpx.txt
+      
+      - name: Httpx - Enumeration
+        run:  |
+          cat ~/result/amass/amass.txt | httpx -o ~/result/httpx/httpx.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
