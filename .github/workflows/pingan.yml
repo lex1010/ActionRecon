@@ -1,9 +1,7 @@
 name: pingan.com
 
 on:
-    push:
-      branches:
-        - 'main'
+    workflow_dispatch:
 
 jobs:
   pingan-scan:
