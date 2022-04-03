@@ -31,7 +31,7 @@ jobs:
       
       - name: Httpx - Enumeration
         run:  |
-          cat ~/result/amass/pingan.com-${{ steps.date.outputs.date }}.txt | httpx -o ~/result/httpx/pingan.com-${{ steps.date.outputs.date }}.txt
+          cat ~/result/amass/pingan.com-${{ steps.date.outputs.date }}.txt | httpx -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/pingan.com-${{ steps.date.outputs.date }}.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2

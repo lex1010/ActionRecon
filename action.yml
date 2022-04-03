@@ -33,11 +33,18 @@ runs:
   using: "composite"
   steps:
     - run: |
-        echo "::group::Install Amass and httpx with go get"
+        echo "::group::Install Amass, Httpx, dirsearch"
         [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
         [ ! -x /home/runner/go/bin/httpx ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
         echo "::endgroup::"
+        echo "::group::Install dirsearch"
+        sudo apt update && apt upgrade -yq
+        sudo apt install python3 git python3-pip -yq
+        cd /home/runner/ && git clone https://github.com/maurosoria/dirsearch.git
+        cd /home/runner/dirsearch && pip3 install -r requirements.txt
+        echo "::endgroup::"
+        
       shell: bash
     - run: |
         echo "::group::Setting up Amass parameters"
