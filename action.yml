@@ -38,7 +38,6 @@ runs:
         [ ! -x /home/runner/go/bin/httpx ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
         echo "::endgroup::"
-        
       shell: bash
     - run: |
         echo "::group::Setting up Amass parameters"
