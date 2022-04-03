@@ -32,11 +32,7 @@ jobs:
       - name: Httpx - Enumeration
         run:  |
           cat ~/result/amass/owasp.org-${{ steps.date.outputs.date }}.txt | httpx -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/owasp.org-${{ steps.date.outputs.date }}.txt
-
-      - name: dirsearch - Enumeration
-        run:  |
-          /usr/local/bin/dirsearch -l ~/result/httpx/owasp.org-${{ steps.date.outputs.date }}.txt --random-agent -e all --skip-on-status 404,500,403 -o ~/result/dirsearch/owasp.org-${{ steps.date.outputs.date }}.txt
-          
+ 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
