@@ -39,10 +39,9 @@ runs:
         echo "/home/runner/go/bin/" >> $GITHUB_PATH
         echo "::endgroup::"
         echo "::group::Install dirsearch"
-        sudo apt update && sudo apt upgrade -yq
+        sudo apt update
         sudo apt install python3 git python3-pip -yq
-        cd /home/runner/ && git clone https://github.com/maurosoria/dirsearch.git
-        cd /home/runner/dirsearch && pip3 install -r requirements.txt
+        sudo /usr/bin/pip3 install dirsearch
         echo "::endgroup::"
         
       shell: bash

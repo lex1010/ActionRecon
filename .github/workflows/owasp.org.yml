@@ -1,0 +1,51 @@
+name: owasp.org
+
+on:
+    workflow_dispatch:
+
+jobs:
+  OWASP-FOR-TEST-SCAN:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3600
+    steps:
+      - name: Get current date
+        id: date
+        run:  echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - run: |
+          mkdir -p ~/result/amass
+          mkdir -p ~/result/httpx
+          mkdir -p ~/result/dirsearch
+
+      - name: Amass - Enumeration
+        uses: r00t-life/amass-action@main
+        with:
+          domains: owasp.org
+          brute: false
+          ipv4: false
+          output: ~/result/amass/owasp.org-${{ steps.date.outputs.date }}.txt
+      
+      - name: Httpx - Enumeration
+        run:  |
+          cat ~/result/amass/owasp.org-${{ steps.date.outputs.date }}.txt | httpx -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/owasp.org-${{ steps.date.outputs.date }}.txt
+
+      - name: dirsearch - Enumeration
+        run:  |
+          /usr/local/bin/dirsearch -l ~/result/httpx/owasp.org-${{ steps.date.outputs.date }}.txt --random-agent -e all --skip-on-status 404,500,403 -o ~/result/dirsearch/owasp.org-${{ steps.date.outputs.date }}.txt
+          
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: owasp.org-${{ steps.date.outputs.date }}
+          path: ~/result/**/*
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project amass enum owasp.org has been done.'
