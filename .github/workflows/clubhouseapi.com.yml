@@ -1,7 +1,9 @@
-name: owasp.org
+name: clubhouseapi.com
 
 on:
-    workflow_dispatch:
+    push:
+      branches:
+        - 'main'
 
 jobs:
   scan:
@@ -15,33 +17,33 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.17
-
+      
       - run: |
           mkdir -p ~/result/amass
           mkdir -p ~/result/httpx
-          mkdir -p ~/result/dirsearch
+          
 
       - name: Amass - Enumeration
         uses: r00t-life/amass-action@main
         with:
-          domains: owasp.org
+          domains: clubhouseapi.com
           brute: false
           ipv4: false
-          output: ~/result/amass/owasp.org-${{ steps.date.outputs.date }}.txt
+          output: ~/result/amass/clubhouseapi.com-${{ steps.date.outputs.date }}.txt
       
       - name: Httpx - Enumeration
         run:  |
-          cat ~/result/amass/owasp.org-${{ steps.date.outputs.date }}.txt | httpx -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/owasp.org-${{ steps.date.outputs.date }}.txt
- 
+          cat ~/result/amass/clubhouseapi.com-${{ steps.date.outputs.date }}.txt | httpx -title -status-code -tech-detect -follow-redirects -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/clubhouseapi.com-${{ steps.date.outputs.date }}.txt
+
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: owasp.org-${{ steps.date.outputs.date }}
+          name: clubhouseapi.com-${{ steps.date.outputs.date }}
           path: ~/result/**/*
-
+      
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The project amass enum owasp.org has been done.'
+          args: 'The project amass enum clubhouseapi.com has been done.'
