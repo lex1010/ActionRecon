@@ -1,4 +1,4 @@
-name: joinclubhouse.com
+name: yelptop100.com
 
 on:
     push:
@@ -24,21 +24,21 @@ jobs:
           
 
       - name: Amass - Enumeration
-        uses: r00t-life/amass-action@main
+        uses: lex1010/amass-action@main
         with:
-          domains: joinclubhouse.com
+          domains: yelptop100.com
           brute: false
           ipv4: false
-          output: ~/result/amass/joinclubhouse.com-${{ steps.date.outputs.date }}.txt
+          output: ~/result/amass/yelptop100.com-${{ steps.date.outputs.date }}.txt
       
       - name: Httpx - Enumeration
         run:  |
-          cat ~/result/amass/joinclubhouse.com-${{ steps.date.outputs.date }}.txt | httpx -title -status-code -tech-detect -follow-redirects -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/joinclubhouse.com-${{ steps.date.outputs.date }}.txt
+          cat ~/result/amass/yelptop100.com-${{ steps.date.outputs.date }}.txt | httpx -title -status-code -tech-detect -follow-redirects -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/yelptop100.com-${{ steps.date.outputs.date }}.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: joinclubhouse.com-${{ steps.date.outputs.date }}
+          name: yelptop100.com-${{ steps.date.outputs.date }}
           path: ~/result/**/*
       
       - name: Discord notification
@@ -46,4 +46,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The project amass enum joinclubhouse.com has been done.'
+          args: 'The project amass enum yelptop100.com has been done.'

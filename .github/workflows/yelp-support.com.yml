@@ -1,4 +1,4 @@
-name: shein.com
+name: yelp-support.com
 
 on:
     push:
@@ -24,21 +24,21 @@ jobs:
           
 
       - name: Amass - Enumeration
-        uses: r00t-life/amass-action@main
+        uses: lex1010/amass-action@main
         with:
-          domains: shein.com
+          domains: yelp-support.com
           brute: false
           ipv4: false
-          output: ~/result/amass/shein.com-${{ steps.date.outputs.date }}.txt
+          output: ~/result/amass/yelp-support.com-${{ steps.date.outputs.date }}.txt
       
       - name: Httpx - Enumeration
         run:  |
-          cat ~/result/amass/shein.com-${{ steps.date.outputs.date }}.txt | httpx -title -status-code -tech-detect -follow-redirects -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/shein.com-${{ steps.date.outputs.date }}.txt
+          cat ~/result/amass/yelp-support.com-${{ steps.date.outputs.date }}.txt | httpx -title -status-code -tech-detect -follow-redirects -silent -p 80,443,8080,81,82,83,8443,8888,8000,10443,9200 -o ~/result/httpx/yelp-support.com-${{ steps.date.outputs.date }}.txt
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: shein.com-${{ steps.date.outputs.date }}
+          name: yelp-support.com-${{ steps.date.outputs.date }}
           path: ~/result/**/*
       
       - name: Discord notification
@@ -46,4 +46,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The project amass enum shein.com has been done.'
+          args: 'The project amass enum yelp-support.com has been done.'
