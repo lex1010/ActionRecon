@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run:  echo "{date}={$(date +'%Y-%m-%d')}" >> $GITHUB_OUTPUT
+        run:  echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         with:
@@ -28,6 +28,7 @@ jobs:
           mkdir -p ~/result/amass
           mkdir -p ~/result/httpx
           echo ${{ env.target }} > ~/result/target.txt
+          echo "${{ steps.date.outputs.date }}"
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v3
