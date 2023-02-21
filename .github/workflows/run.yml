@@ -28,3 +28,9 @@ jobs:
           mkdir -p ~/result/amass
           mkdir -p ~/result/httpx
           echo ${{ env.target }} > ~/result/target.txt
+
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.target }}-${{ steps.date.outputs.date }}
+          path: ~/result/**/*
