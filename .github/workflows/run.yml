@@ -6,27 +6,29 @@ on:
         - 'main'
 
   
-runs:
-  using: "composite"
-  steps:
-    - run: |
-        echo "::group::Install Amass, Httpx"
-        [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
-        [ ! -x /home/runner/go/bin/httpx ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-        echo "/home/runner/go/bin/" >> $GITHUB_PATH
-        echo "::endgroup::"
-      shell: bash
-    - run: |
-        echo "::setting target domain::"
-        echo "target=`cat target.txt`" >> $GITHUB_ENV
-        echo "::endgroup::"
-      shell: bash
+
 
 
 jobs:
   scan:
     runs-on: ubuntu-latest
     timeout-minutes: 3600
+    runs:
+      using: "composite"
+      steps:
+        - run: |
+            echo "::group::Install Amass, Httpx"
+            [ ! -x /home/runner/go/bin/amass ] && go install -v github.com/OWASP/Amass/v3/...@master
+            [ ! -x /home/runner/go/bin/httpx ] && go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+            echo "/home/runner/go/bin/" >> $GITHUB_PATH
+            echo "::endgroup::"
+          shell: bash
+        - run: |
+            echo "::setting target domain::"
+            echo "target=`cat target.txt`" >> $GITHUB_ENV
+            echo "::endgroup::"
+          shell: bash
+
     steps:
       - name: Get current date
         id: date
